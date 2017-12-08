@@ -1,0 +1,9 @@
+.DS_Store
+.env
+bower_components/
+node_modules/
+testnetchain/
+test*/
+devDir/
+devtest/
+*.bin

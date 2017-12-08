@@ -1,0 +1,8 @@
+
+
+Contract  General  adress :  0x56724b663c54224618DeB808CAe30D9eFd57d512
+Contract  Soldier  adress :  0xA9B05055669781Cbb267Df22e78A53622E2d8e69
+
+
+ {f88b86b413198b3bc6527105a53ee292a30365ec} baseCoin testing
+ {5404367b8332b09b2b5423e188dac2ba52df0ced}
