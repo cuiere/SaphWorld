@@ -10,7 +10,6 @@ var http = require('http');
 const Web3 = require('web3');
 const solc = require('solc');
 const fs = require('fs');
-const asciiToHex = Web3.utils.hexToAsccii;
 
 
 
@@ -249,7 +248,8 @@ app.set('contractABI',2);
  * Create HTTP server.
  */
  
- deploy_c.deploy_contract('./voting.sol','TrustMe',[countries_])
+ //deploy_c.deploy_contract('./voting.sol','TrustMe',[countries_])
+  web3.eth.getAccounts()
   .then((deployResult) => {
 
 var server = http.createServer(app);

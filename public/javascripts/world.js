@@ -75,16 +75,58 @@ const conf ={
     }
   };
 
-
+data_ = {
+    JPN: { 
+        "fillKey": "taken",
+    },
+	FRA:{
+		"fillKey": "taken"
+	},
+	TUN:{
+		"fillKey": "taken"
+	},
+	USA:{
+		"fillKey": "taken"
+	},
+	BRA:{
+		"fillKey": "taken"
+	},
+	GAB:{
+		"fillKey": "taken"
+	},
+	IND:{
+		"fillKey": "taken"
+	}
+}
 $(document).ready(function() { 
 //console.log('conf ', conf);
-var map = new Datamap({element: document.getElementById('worldMap'), responsive:true});
+
+var countries = Datamap.prototype.worldTopo.objects.world;
+/* for (var i = 0, j = countries.length; i < j; i++) {
+  console.log("ccv ",countries[i].properties);
+} */
+
+var map = new Datamap({element: document.getElementById('worldMap'),
+								responsive:true, 
+								 fills: {defaultFill:"#2ca1df", taken: '#80d726'},
+								 data: data_ ,
+								 popupOnHover: true,
+								 geographyConfig: {
+										popupTemplate: function(geo, data) {
+											return ['<div class="hoverinfo"><strong>',
+													'Country ' + geo.properties.name,
+													': ' + data.fillKey,
+													'</strong></div>'].join(''); // should return the owner
+										}
+									}
+								 });
 
  $(window).on('resize', function() {
        map.resize();
     });
 	
-console.log('map ', conf);
+console.log('mapdd ', countries);
+
 
 });
 
