@@ -6,7 +6,7 @@
 
 "homesteadBlock": 0,
 
-"eip155Block": 66,
+"eip155Block": 66s,
 
 "eip158Block": 0
 
@@ -27,3 +27,13 @@
 }
 
 }
+
+
+{
+  currentBlock: 1060574,
+  highestBlock: 4684723,
+  knownStates: 810365,
+  pulledStates: 806506,
+  startingBlock: 478802
+}
+> IN

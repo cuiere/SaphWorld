@@ -11,6 +11,9 @@ geth --identity "saph_test_node" --datadir test --nodiscover --rpc --rpcaddr "lo
  # #geth --identity "saph_test_node" --datadir test --rpc --rpcaddr "localhost" --rpcport "8545" --rpccorsdomain "*" --ws --wsaddr localhost --wsport 8545--networkid 1999 --targetgaslimit 9999999999 console
 geth --identity "ta3zebbi" --datadir testing --rpc --rpcaddr "localhost" --rpcport "8545" --rpccorsdomain="chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn" --ws --wsport "8546" --wsorigins="*" --networkid 66 --targetgaslimit 9999999999 console
   
+  !!!!! moz-extension://38612dff-3b70-4644-bc05-9d69b59a561a !!!!!!!
+  
+  
   
   web3.personal.unlockAccount ( web3.personal.listAccounts[0],"farina", 15000)
   

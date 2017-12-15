@@ -148,6 +148,25 @@ function add_provider(){
 }
 
 
+function becomeAKing(count_id){
+	
+  web3.eth.getAccounts()
+  .then((accounts) => {
+     contractInstance.methods.becomeAKing(count_id)
+	 .send({from: accounts[0], gas:200000000, value:1},function(res,err){console.log('you are the king ! ',res,' err ',err);})
+	 .then(() => {
+			contractInstance.methods.getKing(count_id)
+			.call({from: accounts[0],gas:20000000},function(error,result){ console.log('Le king est ', result,error);})
+			
+			});
+  })
+  
+ 
+	
+	
+}
+
+
 
 
 
@@ -211,8 +230,9 @@ $(document).ready(function() {
 		//rank(asciiToHex('Orange'),asciiToHex('PRODUCTXXO'),asciiToHex('Probleme de connection'));
 		
 		//a = getCountries().then(function(res){res.forEach((element)=> console.log(hexToAscii(element)))});
-		add_token_provider('0x56724b663c54224618DeB808CAe30D9eFd57d512');
+		//add_token_provider('0x56724b663c54224618DeB808CAe30D9eFd57d512');
 		
+		becomeAKing(2);		
 
 		//console.log('a = ',a)
 		//getRank(asciiToHex('PRODUCTXXO'));

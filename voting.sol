@@ -56,7 +56,7 @@ contract TrustMe { //is Ownable
 	mapping(bytes32 =>  mapping(bool => bytes32) ) modalites2;
 	mapping(bytes32 =>  mapping(bool => bytes32) ) indexModalities;
 	
-	
+
 	
 	mapping( bytes32 =>  mapping(bytes32 =>  mapping(bool => bytes32) )) modalites; // mapping of linked lists
 	mapping( bytes32 =>  mapping(bytes32 =>  mapping(bool => bytes32) )) products; 
@@ -70,10 +70,13 @@ contract TrustMe { //is Ownable
 	  
 	event Mod(bytes32 mod);
 	
-	
+	uint pr = 1;
+	uint public minimal_price = pr/100;
 	
    address soldier = 0xa6A0EF616bfEF6FE29685cF22Bb42A2E6C3731f1;
    address owner = 0xc34521c41e1859535631f1928873ab518195ca6e;
+   
+   mapping(uint => address) kings;
 
    
    struct transfer{
@@ -98,9 +101,12 @@ contract TrustMe { //is Ownable
 	}
    
    bytes32[] public Countries; // must be initialized by constructor !! long array of strings
+    
+   mapping(uint => country) public WCountries; // allcountries
    
 
-   uint8 countries_length = 197;
+   uint256 countries_length = 197;
+   uint king_bet_ = 2;
 
 	function getCountries() public view returns(bytes32[]){
 		return Countries;
@@ -118,13 +124,53 @@ contract TrustMe { //is Ownable
 	function addTokenProvider(address token_address) public  {
 		ERC20 s = ERC20(token_address);
 		token_providers[numTokenProviders] = token_address;
-		ProvA({symbol:numTokenProviders, addr:token_providers[numTokenProviders]});
-		RankH({rank:11, prodIndex:numTransfers});
 		numTokenProviders ++;
 
 		//return true;
 	}
 	
+		
+	struct country {
+		uint country_id;
+		address country_king;
+		uint256 price;
+		bool taken;
+		
+		//uint256 tokens;
+	}
+	
+	function becomeAKing(uint counId) public payable returns(bool) {
+		
+		
+		
+		if( (!WCountries[counId].taken) ){
+			  RankH({rank: 7, prodIndex:7});
+			 if (msg.value>0 && msg.value > minimal_price){
+				 RankH({rank:counId, prodIndex:msg.value});
+				 WCountries[counId] = country(counId, msg.sender, msg.value,true);
+				return true; 
+			}
+			return false; 
+		}
+		else {
+			RankH({rank:0, prodIndex:0});
+			if (msg.value>0 && msg.value > (WCountries[counId].price * king_bet_)){
+				RankH({rank:1, prodIndex:0});
+				WCountries[counId].country_king = msg.sender;
+				WCountries[counId].price = msg.value;
+				return true;
+			}
+		}
+		
+			
+		return true;
+	  
+		
+	}
+	
+	function getKing(uint counId) public view returns(address){
+		return WCountries[counId].country_king;
+	}
 
 
 
@@ -225,13 +271,14 @@ contract TrustMe { //is Ownable
   deploy the contract to the blockchain. When we deploy the contract,
   we will pass an array of candidates who will be contesting in the election
   */
-  function TrustMe(bytes32[] countries) public {
+  function TrustMe(bytes32[] countries_) public payable {
 	  
-	  Countries = countries;
+	  Countries = countries_;
 	  
 	  // 0x01 good
 	  // 0x02 normal
 	  // 0x03 bad
+	
 	 
   }
   
