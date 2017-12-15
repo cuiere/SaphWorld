@@ -78,31 +78,44 @@ const conf ={
 data_ = {
     JPN: { 
         "fillKey": "taken",
-		"king":"0x123123123"
+		"king":"0x123123123",
+		"price": 0.01,
+		"soldiers" : 6
     },
 	FRA:{
 		"fillKey": "taken",
-		"king":"0x123123123"
+		"king": "0x123123123",
+		"price": 14,
+		"soldiers" : 6
 	},
 	TUN:{
 		"fillKey": "taken",
-		"king":"0x123123123"
+		"king":"0x123123123",
+		"price": 1.3,
+		"soldiers" : 78
 	},
 	USA:{
 		"fillKey": "taken",
-		"king":"0x123123123"
+		"king":"0x123123123",
+		"soldiers" : 89
 	},
 	BRA:{
 		"fillKey": "taken",
-		"king":"0x123123123"
+		"king":"0x123123123",
+		"price": 0.6,
+		"soldiers" : 6
 	},
 	GAB:{
 		"fillKey": "taken",
-		"king":"0x123123123"
+		"king":"0x123123123",
+		"price": 0.6,
+		"soldiers" : 6
 	},
 	IND:{
 		"fillKey": "taken",
-		"king":"0x123123123"
+		"king":"0x123123123",
+		"price": 0.6,
+		"soldiers" : 87
 	}
 }
 $(document).ready(function() { 
@@ -123,15 +136,7 @@ var map = new Datamap({element: document.getElementById('worldMap'),
 								 geographyConfig: {
 										popupTemplate: function(geo, data) {
 											return ['<div class="hoverinfo"><strong>',
-													'Country ' + geo.properties.name,
-													': ' + data.fillKey,
-													'</strong><strong>',
-													'King ' + geo.properties.name,
-													': ' + data.fillKey,
-													'</strong><strong>',
-													'Soldiers ' + geo.properties.name,
-													': ' + data.fillKey,
-													'</strong></div>'].join(''); // should return the owner
+													'Country ' + geo.properties.name+ '</div>'].join(''); // should return the owner
 										}
 									}
 								 });
@@ -141,6 +146,8 @@ var map = new Datamap({element: document.getElementById('worldMap'),
 		console.log('geography.properties ',data_[geography.id]);
 		            $('#countryid').val(geography.id);
 					$('#countryking').val(data_[geography.id].king);
+					$('#countryprice').val(data_[geography.id].price);
+					$('#countrysoldiers').val(data_[geography.id].soldiers);
 		
 					$('#mymodal').modal('show');
         });
