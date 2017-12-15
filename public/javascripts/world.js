@@ -78,24 +78,31 @@ const conf ={
 data_ = {
     JPN: { 
         "fillKey": "taken",
+		"king":"0x123123123"
     },
 	FRA:{
-		"fillKey": "taken"
+		"fillKey": "taken",
+		"king":"0x123123123"
 	},
 	TUN:{
-		"fillKey": "taken"
+		"fillKey": "taken",
+		"king":"0x123123123"
 	},
 	USA:{
-		"fillKey": "taken"
+		"fillKey": "taken",
+		"king":"0x123123123"
 	},
 	BRA:{
-		"fillKey": "taken"
+		"fillKey": "taken",
+		"king":"0x123123123"
 	},
 	GAB:{
-		"fillKey": "taken"
+		"fillKey": "taken",
+		"king":"0x123123123"
 	},
 	IND:{
-		"fillKey": "taken"
+		"fillKey": "taken",
+		"king":"0x123123123"
 	}
 }
 $(document).ready(function() { 
@@ -105,6 +112,8 @@ var countries = Datamap.prototype.worldTopo.objects.world;
 /* for (var i = 0, j = countries.length; i < j; i++) {
   console.log("ccv ",countries[i].properties);
 } */
+
+
 
 var map = new Datamap({element: document.getElementById('worldMap'),
 								responsive:true, 
@@ -116,10 +125,31 @@ var map = new Datamap({element: document.getElementById('worldMap'),
 											return ['<div class="hoverinfo"><strong>',
 													'Country ' + geo.properties.name,
 													': ' + data.fillKey,
+													'</strong><strong>',
+													'King ' + geo.properties.name,
+													': ' + data.fillKey,
+													'</strong><strong>',
+													'Soldiers ' + geo.properties.name,
+													': ' + data.fillKey,
 													'</strong></div>'].join(''); // should return the owner
 										}
 									}
 								 });
+								 
+	map.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
+		
+		console.log('geography.properties ',data_[geography.id]);
+		            $('#countryid').val(geography.id);
+					$('#countryking').val(data_[geography.id].king);
+		
+					$('#mymodal').modal('show');
+        });
+		
+		
+				
+		
+		
+		
 
  $(window).on('resize', function() {
        map.resize();
