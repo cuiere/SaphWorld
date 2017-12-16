@@ -102,7 +102,7 @@ contract TrustMe { //is Ownable
    
    bytes32[] public Countries; // must be initialized by constructor !! long array of strings
     
-   mapping(uint => country) public WCountries; // allcountries
+   mapping(bytes32 => country) public WCountries; // allcountries
    
 
    uint256 countries_length = 197;
@@ -131,22 +131,25 @@ contract TrustMe { //is Ownable
 	
 		
 	struct country {
-		uint country_id;
+		bytes32 country_id;
 		address country_king;
 		uint256 price;
 		bool taken;
 		
 		//uint256 tokens;
 	}
-	
-	function becomeAKing(uint counId) public payable returns(bool) {
+	 event RankG(
+       bytes32 r,
+	   uint g
+	   );
+	function becomeAKing(bytes32 counId) public payable returns(bool) {
 		
 		
 		
 		if( (!WCountries[counId].taken) ){
 			  RankH({rank: 7, prodIndex:7});
 			 if (msg.value>0 && msg.value > minimal_price){
-				 RankH({rank:counId, prodIndex:msg.value});
+				 RankG({r:counId, g:msg.value});
 				 WCountries[counId] = country(counId, msg.sender, msg.value,true);
 				return true; 
 			}
@@ -168,7 +171,7 @@ contract TrustMe { //is Ownable
 		
 	}
 	
-	function getKing(uint counId) public view returns(address){
+	function getKing(bytes32 counId) public view returns(address){
 		return WCountries[counId].country_king;
 	}
 

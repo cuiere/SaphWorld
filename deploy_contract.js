@@ -50,7 +50,7 @@ return await web3.eth.getAccounts()
   const byteCode = compiledCode.contracts[':'+contract_name].bytecode;
    //console.log('byteCode', byteCode);
   const abiDefinition = JSON.parse(compiledCode.contracts[':'+contract_name].interface);
-  // console.log('abiDefinition', abiDefinition);
+   console.log('abiDefinition', abiDefinition);
   // console.log("from client ",accounts[0]);
   const VotingContract = new web3.eth.Contract(abiDefinition,
     {data: '0x'+byteCode, from: accounts[0], gas: 210000000*5}
