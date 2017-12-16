@@ -222,7 +222,7 @@ var deploy_c = require('./deploy_contract');
 var general_adress ;
 //deploy_c.deploy_contract('./General.sol','General',[])
 deploy_c.deploy_contract('./voting.sol','TrustMe',[countries_])
-  .then((deployResult) => {
+  .then((deployResult) async => {
 	  console.log('addrr  ',deployResult.address)
 	  console.log('abi  ',deployResult.abi)
 
@@ -240,7 +240,7 @@ deploy_c.deploy_contract('./voting.sol','TrustMe',[countries_])
           deployResult.address
         );
 		
-      res.end(
+      await res.end(
         fileContents.replace(
           /REPLACE_WITH_CONTRACT_ADDRESS/g,
           deployResult.address

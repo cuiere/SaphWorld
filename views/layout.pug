@@ -1,5 +1,5 @@
-doctype html
-html
+doctype html5
+html(lang="en")
   head
     title= title
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
@@ -10,6 +10,10 @@ html
     script(type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js')
     script(type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js')
     script(type='text/javascript' src='/javascripts/datamaps.world.min.js')
+    script(type='text/javascript' src='https://cdn.rawgit.com/ethereum/web3.js/edd801b86426257c2da75f7a98e93866f04243f2/dist/web3.min.js')
+    //script(type='text/javascript' src='https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js')
+
+
   body
     nav(class="navbar navbar-default" role="navigation")
       div(class="navbar-header")
@@ -45,7 +49,7 @@ html
               li(class="divider")
               li
                 a(href="#") Separated link
-    div(class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id='mymodal')
+    div(class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id='takenmodal')
       div(class="modal-dialog ")
         div(class="modal-content") 
           div(class="modal-header")
@@ -85,12 +89,45 @@ html
                         label(class="control-label") Soldiers:
                       td
                         input(name="countrysoldiers" id="countrysoldiers" value="")
-                  
-              
-					
+						
               div(class="tab-pane" id="access-security") content 0 
               div(class="tab-pane" id="networking") content 1
           div(class="modal-footer")
             button(type="button" class="btn btn-default" data-dismiss="modal") Close
-    block content 
-    script(type='text/javascript' src='/javascripts/world.js ')
+			
+			
+			
+    div(class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="emptymodal")
+      div(class="modal-dialog ")
+        div(class="modal-content") 
+          div(class="modal-header")
+            button(type="button" class="close" data-dismiss="modal")
+              h4(class="modal-title") Become a King 
+          div(class="modal-body")
+                table
+                  thead
+                  tbody(class="table")
+                    tr
+                      td 
+                        label(class="control-label") Country: 
+                      td
+                        input(name="emptycountryid" id="emptycountryid" value="")
+                    tr
+                      td
+                        label(class="control-label") King:
+                      td
+                        input(name="emptycountryking" id="emptycountryking" value="")
+                    tr
+                      td
+                        label(class="control-label") Price:
+                      td
+                        input(name="emptycountryprice" id="emptycountryprice" value="")
+                    tr
+                      td
+                        label(class="control-label") Soldiers:
+                      td
+                        input(name="emptycountrysoldiers" id="emptycountrysoldiers" value="")
+                button(type="submit" class="btn btn-default" name="buy_c" id="becomeaking") Become a King
+    block content
+  script(type='text/javascript' src='/javascripts/index.js')
+  script(type='text/javascript' src='/javascripts/world.js ')

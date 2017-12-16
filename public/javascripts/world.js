@@ -143,13 +143,25 @@ var map = new Datamap({element: document.getElementById('worldMap'),
 								 
 	map.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
 		
-		console.log('geography.properties ',data_[geography.id]);
-		            $('#countryid').val(geography.id);
+		
+		            
+					if (data_[geography.id] != undefined){
+					$('#countryid').val(geography.id);
 					$('#countryking').val(data_[geography.id].king);
 					$('#countryprice').val(data_[geography.id].price);
 					$('#countrysoldiers').val(data_[geography.id].soldiers);
+					$('#takenmodal').modal('show');
+					}
+					else {
+						console.log('geography.properties ',data_[geography.id]);
+						$('#emptycountryid').val(geography.id);
+						$('#emptycountryking').val("N/A Not yet Conquested");
+						$('#emptycountryprice').val(0.0001);
+						$('#emptycountrysoldiers').val(0);
+						$('#emptymodal').modal('show');
+					}
 		
-					$('#mymodal').modal('show');
+					
         });
 		
 		
