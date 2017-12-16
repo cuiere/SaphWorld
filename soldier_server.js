@@ -22,7 +22,7 @@ for (i=0; i<countries_t.length;i++){
 	countries_.push(asciiToHex( countries_t[i]))
 }
 
-//deploy_c.deploy_contract('./voting.sol','TrustMe',[countries_])
+deploy_c.deploy_contract('./voting.sol','TrustMe',[countries_])
 //deploy_c.deploy_contract('./General.sol','General',[])
  
 /*     var coinbase = '0xf88b86b413198b3bc6527105a53ee292a30365ec';
