@@ -152,7 +152,7 @@ function becomeAKing(count_id, value_){
   web3.eth.getAccounts()
   .then((accounts) => {
      contractInstance.methods.becomeAKing(count_id)
-	 .send({from: accounts[0], gas:200000000, value:value_},function(res,err){console.log('you are the king ! ',res,' err ',err);})
+	 .send({from: accounts[3], gas:200000000, value:value_},function(res,err){console.log('you are the king ! ',res,' err ',err);})
 	 .then(() => {
 			contractInstance.methods.getKing(count_id)
 			.call({from: accounts[0],gas:20000000},function(error,result){ console.log('Le king est ', result,error);})
@@ -261,7 +261,9 @@ $(document).ready(function() {
 		
 		contractInstance.events.RankH({
 			fromBlock: 0
-		}, function(error, event){ console.log("Rank ",event.returnValues.rank," for prod ",event.returnValues.prodIndex); })
+		}, function(error, event){ 
+				console.log("Rank ",event.returnValues.rank," for prod ",event.returnValues.prodIndex);
+		})
 		.on('data', function(event){
 			//console.log('data',event.modalities); // same results as the optional callback above
 		})
