@@ -9,8 +9,7 @@ geth --identity "saph_test_node" --datadir test --nodiscover --rpc --rpcaddr "lo
 #  geth --identity "saphnode" --nodiscover --networkid 1999 --datadir testnetchain  init gen.json
   
  # #geth --identity "saph_test_node" --datadir test --rpc --rpcaddr "localhost" --rpcport "8545" --rpccorsdomain "*" --ws --wsaddr localhost --wsport 8545--networkid 1999 --targetgaslimit 9999999999 console
-geth --identity "ta3zebbi" --datadir testing --rpc --rpcapi "eth,net,web3,debug"  --rpcaddr "localhost" --rpcport "8545" --rpccorsdomain="moz-extension://38612dff-3b70-4644-bc05-9d69b59a561a" --ws --wsport "8546" --wsorigins="*" --wsapi "eth,net,web3,debug" --networkid 66 --targetgaslimit 9999999999 console
-  
+geth --identity "ta3zebbi" --datadir testing --rpc --rpcapi "eth,net,web3,debug"  --rpcaddr "localhost" --rpcport "8545" --rpccorsdomain="*" --ws --wsport "8546" --wsorigins="*" --wsapi "eth,net,web3,debug" --wsaddr "192.168.1.14"  --mine --minerthreads=1  --networkid 66 --targetgaslimit 9999999999 console  
   !!!!! moz-extension://38612dff-3b70-4644-bc05-9d69b59a561a !!!!!!!
   chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn
   

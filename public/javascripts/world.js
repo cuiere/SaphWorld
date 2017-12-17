@@ -33,7 +33,7 @@ var extractor = async (element)=>{
 							price = res[2];
 							taken = res[3];
 							// filling kings
-							console.log('kings[king]79 ',kings[king] );
+							//console.log('kings[king]79 ',kings[king] );
 							if(kings[king] == undefined){
 								kings_name.push(king);
 								kings[king] = [];

@@ -7,9 +7,27 @@
 //web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 //const web3 = new Web3(new Web3.providers.IpcProvider("\\\\.\\pipe\\geth.ipc")); // WINDOWS path
 
-		web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
+		//web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
+		
 
 
+
+function getWeb3(callback) {
+  if (typeof window.web3 === 'undefined') {
+    // no web3, use fallback
+    console.error("Please use a web3 browser");
+  } else {
+    // window.web3 == web3 most of the time. Don't override the provided,
+    // web3, just wrap it in your Web3.
+    var web3 = new Web3(window.web3.currentProvider); 
+
+    // the default account doesn't seem to be persisted, copy it to our
+    // new instance
+    web3.eth.defaultAccount = window.web3.eth.defaultAccount;
+
+    callback(web3);
+  }
+}
 
 
 contractInstance = null;
@@ -72,16 +90,6 @@ function get_token_provider(symb) {
 
   
 }
-
-
-
-
-
-
-
-
-
-
 
 function rank(prov,prod,mod){
 	
@@ -146,19 +154,18 @@ function add_provider(){
 }
 
 
-function becomeAKing(count_id, value_){
-	console.log('contractInstance.methods BK ', contractInstance.methods.becomeAKing);
+async function becomeAKing(count_id, value_){
+	console.log('contractInstance.methods BK ', web3.eth.getAccounts(function(err,res){console.log('res err',res,err)}));
 	
-  web3.eth.getAccounts()
-  .then((accounts) => {
-     contractInstance.methods.becomeAKing(count_id)
-	 .send({from: accounts[3], gas:200000000, value:value_},function(res,err){console.log('you are the king ! ',res,' err ',err);})
-	 .then(() => {
-			contractInstance.methods.getKing(count_id)
-			.call({from: accounts[0],gas:20000000},function(error,result){ console.log('Le king est ', result,error);})
-			
-			});
-  })
+  await web3.eth.getAccounts(async function(err,accounts){
+      await contractInstance.methods.becomeAKing(count_id)
+		 .send({from: accounts[0], gas:200000000, value:value_},function(res,err){console.log(' ADDRR ',accounts[0],' RES ',res,' err ',err);$('#emptymodal').modal('hide');})
+		 .then(() => {
+				contractInstance.methods.getKing(count_id)
+				.call({from: accounts[0],gas:20000000},function(error,result){ console.log('Le king est ', result,error);})
+				});
+	  });
+	  console.log('after   !! ')
 }
 
 function getCountryInfo(cid){
@@ -182,6 +189,21 @@ function getCountryInfo(cid){
 
 
 $(document).ready(function() { 
+		 if (typeof window.web3 === 'undefined') {
+    // no web3, use fallback
+    console.error("Please use a web3 browser");
+	var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://192.168.1.14:8546'));
+	console.log('we ll use this web3', web3);
+	//$('#emptymodal').modal('show');
+  } else {
+    // window.web3 == web3 most of the time. Don't override the provided,
+    // web3, just wrap it in your Web3.
+    var web3 = new Web3(window.web3.currentProvider); 
+
+    // the default account doesn't seem to be persisted, copy it to our
+    // new instance
+    web3.eth.defaultAccount = window.web3.eth.defaultAccount;
+  }
 	/* if(typeof window.web3 !== "undefined" && typeof window.web3.currentProvider !== "undefined") {
         var web3 = new Web3(window.web3.currentProvider);
 		console.log('Already injected, using this web3');
@@ -193,7 +215,7 @@ $(document).ready(function() {
 		//web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 		//var web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546');
-			console.log('window.web3.currentProvider :',window.web3.currentProvider)
+			//console.log('window.web3.currentProvider :',window.web3.currentProvider)
 
 
 	console.log('web3 version => ', web3.version);
@@ -209,6 +231,7 @@ $(document).ready(function() {
     contractInstance = new web3.eth.Contract(ABI_DEFINITION, CONTRACT_ADDRESS);
 	web3.eth.getAccounts()
 	  .then((accounts) => {
+		  console.log('ACCOUNTS => ',accounts)
 
 	var subscription = web3.eth.subscribe('pendingTransactions', function(error, result){
 			if (!error)
@@ -217,10 +240,12 @@ $(document).ready(function() {
 		
 	var b_a_king = document.getElementById('becomeaking');
 
-			b_a_king.addEventListener('click', function() {
-				console.log('you want to be a king of ',Web3.utils.asciiToHex($('#emptycountryid').val()))
+			b_a_king.addEventListener('click', async function() {
+				console.log('you want to be a king of ',Web3.utils.asciiToHex($('#emptycountryid').val()));
 				console.log('the price is ',$('#emptycountryprice').val());
-				becomeAKing(Web3.utils.asciiToHex($('#emptycountryid').val()),$('#emptycountryprice').val())
+				await becomeAKing(Web3.utils.asciiToHex($('#emptycountryid').val()),$('#emptycountryprice').val());
+				console.log('finish awaiting for become a king ... this will hide the modal')
+				
 				
 			}, false);
 				//.on('error Mod ', console.error);
@@ -261,8 +286,11 @@ $(document).ready(function() {
 		
 		contractInstance.events.RankH({
 			fromBlock: 0
-		}, function(error, event){ 
-				console.log("Rank ",event.returnValues.rank," for prod ",event.returnValues.prodIndex);
+		}, function(error, event){
+				if(error)
+					console.log('eRROR =>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>RankH ',error);
+				else
+				console.log("Rank ",event.returnValues.rank," for prod ",event.returnValues.prodIndex," err",err);
 		})
 		.on('data', function(event){
 			//console.log('data',event.modalities); // same results as the optional callback above
