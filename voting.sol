@@ -174,8 +174,10 @@ contract TrustMe { //is Ownable
 	function getKing(bytes32 counId) public view returns(address){
 		return WCountries[counId].country_king;
 	}
-
-
+	
+	function getCountryInfo(bytes32 countryID) public view returns(bytes32 ,address , uint256 ,bool ){//country_id;country_king;price;taken
+	return (WCountries[countryID].country_id,WCountries[countryID].country_king,WCountries[countryID].price,WCountries[countryID].taken);
+	}
 
   
 	

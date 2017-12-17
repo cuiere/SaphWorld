@@ -1,136 +1,67 @@
 
+// populating local Data
+/*  */
 
-
-const conf ={
-    scope: 'world', // Currently supports 'usa' and 'world', however with custom map data you can specify your own
-	element: document.getElementById('worldMap'), // element in which the wap will be appen
-    //setProjection: setProjection, // Returns a d3 path and projection functions
-    projection: 'equirectangular', // Style of projection to be used. try "mercator"
-    height: null, // If not null, datamaps will grab the height of 'element'
-    width: null, // If not null, datamaps will grab the width of 'element',
-    responsive: true, // If true, call `resize()` on the map object when it should adjust it's size
-    done: function() {}, // Callback when the map is done drawing
-    fills: {
-      defaultFill: '#ABDDA4' // The keys in this object map to the "fillKey" of [data] or [bubbles]
-    },
-    dataType: 'json', // For use with dataUrl, currently 'json' or 'csv'. CSV should have an `id` column
-    dataUrl: null, // If not null, datamaps will attempt to fetch this based on dataType ( default: json )
-    geographyConfig: {
-        dataUrl: null, // If not null, datamaps will fetch the map JSON (currently only supports topojson)
-        hideAntarctica: true,
-        hideHawaiiAndAlaska : false,
-        borderWidth: 1,
-        borderOpacity: 1,
-        borderColor: '#FDFDFD',
-        popupTemplate: function(geography, data) { // This function should just return a string
-          return '&lt;div class="hoverinfo"&gt;&lt;strong&gt;' + geography.properties.name + '&lt;/strong&gt;&lt;/div&gt;';
-        },
-        popupOnHover: true, // True to show the popup while hovering
-        highlightOnHover: true,
-        highlightFillColor: '#FC8D59',
-        highlightBorderColor: 'rgba(250, 15, 160, 0.2)',
-        highlightBorderWidth: 2,
-        highlightBorderOpacity: 1
-    },
-    bubblesConfig: {
-        borderWidth: 2,
-        borderOpacity: 1,
-        borderColor: '#FFFFFF',
-        popupOnHover: true, // True to show the popup while hovering
-        radius: null,
-        popupTemplate: function(geography, data) { // This function should just return a string
-          return '<div class="hoverinfo"><strong>' + data.name + '</strong></div>';
-        },
-        fillOpacity: 0.75,
-        animate: true,
-        highlightOnHover: true,
-        highlightFillColor: '#FC8D59',
-        highlightBorderColor: 'rgba(250, 15, 160, 0.2)',
-        highlightBorderWidth: 2,
-        highlightBorderOpacity: 1,
-        highlightFillOpacity: 0.85,
-        exitDelay: 100, // Milliseconds
-        key: JSON.stringify
-    },
-    arcConfig: {
-      strokeColor: '#DD1C77',
-      strokeWidth: 1,
-      arcSharpness: 1,
-      animationSpeed: 600, // Milliseconds
-      popupOnHover: false, // True to show the popup while hovering
-      popupTemplate: function(geography, data) { // This function should just return a string
-        // Case with latitude and longitude
-        if ( ( data.origin && data.destination ) && data.origin.latitude && data.origin.longitude && data.destination.latitude && data.destination.longitude ) {
-          return '<div class="hoverinfo"><strong>Arc</strong><br>Origin: ' + JSON.stringify(data.origin) + '<br>Destination: ' + JSON.stringify(data.destination) + '</div>';
-        }
-        // Case with only country name
-        else if ( data.origin && data.destination ) {
-          return '<div class="hoverinfo"><strong>Arc</strong><br>' + data.origin + ' -> ' + data.destination + '</div>';
-        }
-        // Missing information
-        else {
-          return '';
-        }
-      }
-    }
-  };
-
-data_ = {
-    JPN: { 
-        "fillKey": "taken",
-		"king":"0x123123123",
-		"price": 0.01,
-		"soldiers" : 6
-    },
-	FRA:{
-		"fillKey": "taken",
-		"king": "0x123123123",
-		"price": 14,
-		"soldiers" : 6
-	},
-	TUN:{
-		"fillKey": "taken",
-		"king":"0x123123123",
-		"price": 1.3,
-		"soldiers" : 78
-	},
-	USA:{
-		"fillKey": "taken",
-		"king":"0x123123123",
-		"soldiers" : 89
-	},
-	BRA:{
-		"fillKey": "taken",
-		"king":"0x123123123",
-		"price": 0.6,
-		"soldiers" : 6
-	},
-	GAB:{
-		"fillKey": "taken",
-		"king":"0x123123123",
-		"price": 0.6,
-		"soldiers" : 6
-	},
-	IND:{
-		"fillKey": "taken",
-		"king":"0x123123123",
-		"price": 0.6,
-		"soldiers" : 87
-	}
-}
 $(document).ready(function() { 
 //console.log('conf ', conf);
+var map;
+data_ = {};
+var globalcont = 0;
+const countries_t = ["AFG","AGO","ALB","ARE","ARG","ARM","ATA","ATF","AUS","AUT","AZE","BDI","BEL","BEN","BFA","BGD","BGR","BHS","BIH","BLR","BLZ","BOL","BRA","BRN","BTN","BWA","CAF","CAN","CHE","CHL","CHN","CIV","CMR","COD","COG","COL","CRI","CUB","-99","CYP","CZE","DEU","DJI","DNK","DOM","DZA","ECU","EGY","ERI","ESP","EST","ETH","FIN","FJI","FLK","FRA","GUF","GAB","GBR","GEO","GHA","GIN","GMB","GNB","GNQ","GRC","GRL","GTM","GUY","HND","HRV","HTI","HUN","IDN","IND","IRL","IRN","IRQ","ISL","ISR","ITA","JAM","JOR","JPN","KAZ","KEN","KGZ","KHM","KOR","-99","KWT","LAO","LBN","LBR","LBY","LKA","LSO","LTU","LUX","LVA","MAR","MDA","MDG","MEX","MKD","MLI","MMR","MNE","MNG","MOZ","MRT","MWI","MYS","NAM","NCL","NER","NGA","NIC","NLD","NOR","NPL","NZL","OMN","PAK","PAN","PER","PHL","PNG","POL","PRI","PRK","PRT","PRY","QAT","ROU","RUS","RWA","ESH","SAU","SDN","SSD","SEN","SLB","SLE","SLV","-99","SOM","SRB","SUR","SVK","SVN","SWE","SWZ","SYR","TCD","TGO","THA","TJK","TKM","TLS","TTO","TUN","TUR","TWN","TZA","UGA","UKR","URY","USA","UZB","VEN","VNM","VUT","PSE","YEM","ZAF","ZMB","ZWE"]
+var countries = Datamap.prototype.worldTopo.objects.world.geometries;
+console.log('countries ==> ',countries);
 
-var countries = Datamap.prototype.worldTopo.objects.world;
-/* for (var i = 0, j = countries.length; i < j; i++) {
-  console.log("ccv ",countries[i].properties);
-} */
+async function asyncForEach(array, callback) {
+	console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index])
+		console.log('---------------------------------------------------------------------~~~~')
+
+  }
+}
 
 
+var extractor = async (element)=>{
+	 
+		 await contractInstance.methods.getCountryInfo(Web3.utils.asciiToHex(element)).call({gas:2000000},function(err,res){
+			 		 	if(!err){
+							id = res[0];
+							king = res[1];
+							price = res[2];
+							taken = res[3];
+							var tkn = ""
+							if (taken == true )
+								tkn = 'taken'
+							 
+						 
+						  data_[element]={
+							 'fillKey':tkn,//taken.toString(),
+							 'king':king,
+							 'price':price,
+							 'soldiers':0}	 
+		 }});
 
-var map = new Datamap({element: document.getElementById('worldMap'),
+		 globalcont++;
+			 
+			 
+ };
+ 
+const start = async () => {
+ await asyncForEach(countries_t, extractor );
+ 
+}
+
+
+// using start to force waiting for async web3 calls before coloring the map
+start().then(()=> {
+ console.log('data ', globalcont);
+
+	 map = new Datamap({element: document.getElementById('worldMap'),
 								responsive:true, 
-								 fills: {defaultFill:"#2ca1df", taken: '#80d726'},
+								 fills: {
+									 defaultFill:'#2ca1df', 
+									 taken: '#FF0000'
+								 },
 								 data: data_ ,
 								 popupOnHover: true,
 								 geographyConfig: {
@@ -141,30 +72,43 @@ var map = new Datamap({element: document.getElementById('worldMap'),
 									}
 								 });
 								 
-	map.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
+	//map.updateChoropleth(data_[2]);
+
+								 
+	console.log('constructedMAp ',map);
+								 
+	// define onclick for the map
+	map.svg.selectAll('.datamaps-subunit').on('click', function(data) {
+	contractInstance.methods.getCountryInfo(Web3.utils.asciiToHex(data.id.toString())).call({gas:2000000},function(err,res){
+		if(!err){
+		id = res[0];
+		king = res[1];
+		price = res[2];
+		taken = res[3];
+		console.log('debug ',globalcont)
 		
-		
-		            
-					if (data_[geography.id] != undefined){
-					$('#countryid').val(geography.id);
-					$('#countryking').val(data_[geography.id].king);
-					$('#countryprice').val(data_[geography.id].price);
-					$('#countrysoldiers').val(data_[geography.id].soldiers);
+		if (taken){
+					$('#countryid').val(Web3.utils.toUtf8(id));
+					$('#countryking').val(king);
+					$('#countryprice').val(price);
+					$('#countrysoldiers').val(taken);
 					$('#takenmodal').modal('show');
 					}
 					else {
-						console.log('geography.properties ',data_[geography.id]);
-						$('#emptycountryid').val(geography.id);
+						$('#emptycountryid').val(data.id);
 						$('#emptycountryking').val("N/A Not yet Conquested");
-						$('#emptycountryprice').val(0.0001);
+						$('#emptycountryprice').val(1);
 						$('#emptycountrysoldiers').val(0);
 						$('#emptymodal').modal('show');
 					}
-		
+
+
+		}
+	});	
 					
-        });
+        });// end Onclick
 		
-		
+		});
 				
 		
 		

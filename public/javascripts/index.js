@@ -7,6 +7,7 @@
 //web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 //const web3 = new Web3(new Web3.providers.IpcProvider("\\\\.\\pipe\\geth.ipc")); // WINDOWS path
 
+		web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 
 
 
@@ -158,12 +159,11 @@ function becomeAKing(count_id, value_){
 			
 			});
   })
-  
- 
-	
-	
 }
 
+function getCountryInfo(cid){
+       return contractInstance.methods.getCountryInfo(cid).call({gas:2000000});	 
+}
 
 
 
@@ -190,7 +190,6 @@ $(document).ready(function() {
         var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 		console.log("web3.currentProvider ... injting",web3.currentProvider)
       } */
-		web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 		//web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 		//var web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546');
@@ -199,32 +198,15 @@ $(document).ready(function() {
 
 	console.log('web3 version => ', web3.version);
 	console.log('web 3.eth => ', web3.eth.subscribe);
-	const ABI_DEFINITION= 
-	'[{"constant":true,"inputs":[{"name":"prod","type":"bytes32"}],"name":"getModalities","outputs":[{"name":"","type":"bytes32[]"}],"payable":false,"stateMutability":"view","type":"function"},'+
-	'{"constant":false,"inputs":[{"name":"coinContractAddress","type":"address"},{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"sendCoin","outputs":[{"name":"","type":"bool"}]'+
-	',"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"prod","type":"bytes32"}],"name":"getLenModalities","outputs":[{"name":"","type":"uint16"}],"payable":false,'+
-	'"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"symb","type":"uint256"}],"name":"getTokenProviderAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view"'+
-	',"type":"function"},{"constant":true,"inputs":[{"name":"prov","type":"bytes32"},{"name":"prod","type":"bytes32"},{"name":"moda","type":"bytes32"}],"name":"getRank","outputs":[{"name":"","type":"uint16"}],"payable":false,'+
-'"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"prov","type":"bytes32"},{"name":"prod","type":"bytes32"},{"name":"moda","type":"bytes32"}],"name":"rank","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}'+
-',{"constant":true,"inputs":[{"name":"","type":"bytes32"},{"name":"","type":"bytes32"},{"name":"","type":"bytes32"}],"name":"Ranks","outputs":[{"name":"","type":"uint16"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"counId","type":"bytes32"}],"name":"becomeAKing","outputs":[{"name":"","type":"bool"}],'+
-'"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"minimal_price","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},'+
-'{"constant":true,"inputs":[],"name":"getCountries","outputs":[{"name":"","type":"bytes32[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token_address","type":"address"}],'+
-'"name":"addTokenProvider","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"Countries","outputs":[{"name":"","type":"bytes32"}],'+
-'"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"counId","type":"bytes32"}],"name":"getKing","outputs":[{"name":"","type":"address"}],"payable":false'+
-',"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"WCountries","outputs":[{"name":"country_id","type":"bytes32"},{"name":"country_king","type":"address"}'+
-',{"name":"price","type":"uint256"},{"name":"taken","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"countries_","type":"bytes32[]"}],"payable":true,"stateMutability":"payable","type":"constructor"},'+
-'{"anonymous":false,"inputs":[{"indexed":false,"name":"rank","type":"uint256"},{"indexed":false,"name":"prodIndex","type":"uint256"}],"name":"RankH","type":"event"},'+
-'{"anonymous":false,"inputs":[{"indexed":false,"name":"mod","type":"bytes32"}],"name":"Mod","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"symbol","type":"uint256"},'+
-'{"indexed":false,"name":"addr","type":"address"}],"name":"ProvA","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"r","type":"bytes32"},'+
-'{"indexed":false,"name":"g","type":"uint256"}],"name":"RankG","type":"event"}]';
+	const ABI_DEFINITION= [{"constant":true,"inputs":[{"name":"prod","type":"bytes32"}],"name":"getModalities","outputs":[{"name":"","type":"bytes32[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"coinContractAddress","type":"address"},{"name":"receiver","type":"address"},{"name":"amount","type":"uint256"}],"name":"sendCoin","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"prod","type":"bytes32"}],"name":"getLenModalities","outputs":[{"name":"","type":"uint16"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"symb","type":"uint256"}],"name":"getTokenProviderAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"prov","type":"bytes32"},{"name":"prod","type":"bytes32"},{"name":"moda","type":"bytes32"}],"name":"getRank","outputs":[{"name":"","type":"uint16"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"prov","type":"bytes32"},{"name":"prod","type":"bytes32"},{"name":"moda","type":"bytes32"}],"name":"rank","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"},{"name":"","type":"bytes32"},{"name":"","type":"bytes32"}],"name":"Ranks","outputs":[{"name":"","type":"uint16"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"counId","type":"bytes32"}],"name":"becomeAKing","outputs":[{"name":"","type":"bool"}],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[{"name":"countryID","type":"bytes32"}],"name":"getCountryInfo","outputs":[{"name":"","type":"bytes32"},{"name":"","type":"address"},{"name":"","type":"uint256"},{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"minimal_price","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getCountries","outputs":[{"name":"","type":"bytes32[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"token_address","type":"address"}],"name":"addTokenProvider","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"Countries","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"counId","type":"bytes32"}],"name":"getKing","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"WCountries","outputs":[{"name":"country_id","type":"bytes32"},{"name":"country_king","type":"address"},{"name":"price","type":"uint256"},{"name":"taken","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"countries_","type":"bytes32[]"}],"payable":true,"stateMutability":"payable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"rank","type":"uint256"},{"indexed":false,"name":"prodIndex","type":"uint256"}],"name":"RankH","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"mod","type":"bytes32"}],"name":"Mod","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"symbol","type":"uint256"},{"indexed":false,"name":"addr","type":"address"}],"name":"ProvA","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"r","type":"bytes32"},{"indexed":false,"name":"g","type":"uint256"}],"name":"RankG","type":"event"}];
 
-		const CONTRACT_ADDRESS = "0x75663b58cBD3e363Df5fACf669430FCabf16169E"; //'0x3EB376CD63074b21BeF7eB78C67FCB4A05967ad5';
+		const CONTRACT_ADDRESS = "0x9970c4243C8103bE98F7a89F7ece581867307610"; //'0x3EB376CD63074b21BeF7eB78C67FCB4A05967ad5';
 
 	
 	var ga =  0x56724b663c54224618DeB808CAe30D9eFd57d512;
 	var sa =  0xA9B05055669781Cbb267Df22e78A53622E2d8e69;
 	console.log('json ', JSON)
-    contractInstance = new web3.eth.Contract(JSON.parse(ABI_DEFINITION), CONTRACT_ADDRESS);
+    contractInstance = new web3.eth.Contract(ABI_DEFINITION, CONTRACT_ADDRESS);
 	web3.eth.getAccounts()
 	  .then((accounts) => {
 
@@ -233,29 +215,15 @@ $(document).ready(function() {
 				console.log("Pending transaction : ",result);
 		});
 		
-		
-	contractInstance.events.RankH({
-			fromBlock: 0
-		}, function(error, ev){ console.log("Rank ",ev.returnValues.rank," for prod ",ev.returnValues.prodIndex); })
-		.on('data', function(ev){
-			//console.log('data',ev.modalities); // same results as the optional callback above
-		})
-		.on('changed', function(ev){
-			// remove ev from local database
-		})
-		.on('error Rankh', console.error);
-		
-		
-	contractInstance.events.Mod({
-			fromBlock: 0
-		}, function(error, ev){ console.log("Mod ",( ev.returnValues.mod)," hex: ",ev.returnValues.mod); })
-		.on('data', function(ev){
-			//console.log('data',ev.modalities); // same results as the optional callback above
-		})
-		.on('changed', function(ev){
-			// remove ev from local database
-		})
-		.on('error Mod ', console.error);
+	var b_a_king = document.getElementById('becomeaking');
+
+			b_a_king.addEventListener('click', function() {
+				console.log('you want to be a king of ',Web3.utils.asciiToHex($('#emptycountryid').val()))
+				console.log('the price is ',$('#emptycountryprice').val());
+				becomeAKing(Web3.utils.asciiToHex($('#emptycountryid').val()),$('#emptycountryprice').val())
+				
+			}, false);
+				//.on('error Mod ', console.error);
 		
 
 	 
@@ -278,7 +246,8 @@ $(document).ready(function() {
 		
 		
 		
-		becomeAKing('0x000E');		
+		//becomeAKing('0x545552',6); //TUR
+		//getCountryInfo('0x545552');
 		//becomeAKing('ITA');
 
 		//console.log('a = ',a)
@@ -303,7 +272,7 @@ $(document).ready(function() {
 		
 		contractInstance.events.ProvA({
 			fromBlock: 0
-		}, function(error, event){ console.log("ProvA symb",hexToAscii(event.returnValues.symbol)," Addrr ",event.returnValues.addr); })
+		}, function(error, event){ console.log("ProvA symb",web3.utils.hexToAscii(event.returnValues.symbol)," Addrr ",event.returnValues.addr); })
 		.on('data ProvA', function(event){
 			//console.log('data',event.modalities); // same results as the optional callback above
 		})
@@ -314,7 +283,7 @@ $(document).ready(function() {
 		
 		contractInstance.events.Mod({
 			fromBlock: 0
-		}, function(error, event){ console.log("Mod ",hexToAscii( event.returnValues.mod)," hex: ",event.returnValues.mod); })
+		}, function(error, event){ console.log("Mod ",web3.utils.hexToAscii( event.returnValues.mod)," hex: ",event.returnValues.mod); })
 		.on('data', function(event){
 			//console.log('data',event.modalities); // same results as the optional callback above
 		})
