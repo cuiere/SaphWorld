@@ -12,17 +12,16 @@ var net = require('net');
 
 
 //const web3 = new Web3(new Web3.providers.IpcProvider("\\\\.\\pipe\\geth.ipc", net)); // WINDOWS path
-const web3 = new Web3(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 
-const asciiToHex = Web3.utils.asciiToHex;
 
 module.exports = {
-deploy_contract:async function (filepath, contract_name, args){
-
+deploy_contract:async function (filepath, contract_name, args , web3_prov){
+var web3 = web3_prov
+const asciiToHex = Web3.utils.asciiToHex;
 
 return await web3.eth.getAccounts()
 .then(async (accounts) => {
-  // console.log('accounts', accounts);
+  console.log('accounts', accounts);
   const code = [
 	  fs.readFileSync(filepath).toString()
 		];
@@ -48,12 +47,12 @@ return await web3.eth.getAccounts()
   
   
   const byteCode = compiledCode.contracts[':'+contract_name].bytecode;
-   //console.log('byteCode', byteCode);
+   console.log('byteCode', byteCode);
   const abiDefinition = JSON.parse(compiledCode.contracts[':'+contract_name].interface);
-   console.log('abiDefinition', compiledCode.contracts[':'+contract_name].interface);
-  // console.log("from client ",accounts[0]);
+   //console.log('abiDefinition', compiledCode.contracts[':'+contract_name].interface);
+   web3.eth.getBalance(accounts[0], function(e,b){console.log('la balance de ',accounts[0],'est de : ',b);});
   const VotingContract = new web3.eth.Contract(abiDefinition,
-    {data: '0x'+byteCode, from: accounts[0], gas: 210000000*5}
+    {data: '0x'+byteCode, from: accounts[0], gas: 2100000}
   );
    //console.log('VotingContract', VotingContract);
   let deployedContract = null ;
@@ -70,10 +69,10 @@ return await web3.eth.getAccounts()
 			return result.options.address;
 	    }) 
 		
-		 return {
+  return {
         address: deployedContract,
         abi: compiledCode.contracts[':'+contract_name].interface
-    };
+        };
  
   
  //
@@ -81,4 +80,8 @@ return await web3.eth.getAccounts()
 })
   
 }
+
+
+
+
 }

@@ -4,8 +4,8 @@ var deploy_c = require('../deploy_contract');
 
 
 /* GET users listing. */
-router.get('/deploy', function(req, res, next) {
-  res.send('respond with res a resource');
+router.get('/', function(req, res, next) {
+		res.render('deploy');
 });
 
 module.exports = router;

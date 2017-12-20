@@ -1,0 +1,165 @@
+<!DOCTYPE html5>
+<html lang="en">
+	<head>
+		<title>Imperator</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+		<!--link(rel='stylesheet', href='/stylesheets/style.css')-->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>>
+		<script type="text/javascript" src="https://cdn.rawgit.com/ethereum/web3.js/edd801b86426257c2da75f7a98e93866f04243f2/dist/web3.min.js"></script>.-->
+		<script type="text/javascript" src="datamaps.world.min.js"></script>
+		<!--<script type="text/javascript" src="web3.js"></script> -->
+	</head>
+	<body>
+	
+	<!-- nav kizeb zebbi -->
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<a class="navbar-brand" href="#">Imperator</a>
+			<div class="collapse navbar-collapse" id="navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-left">
+					<li><a href="#">Menu</a></li>
+					<li><a href="#">Menu</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li><a href="#">Link</a></li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" href="#" data-toggle="dropdown">Dropdown 
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Separated link</a></li>
+						</ul>
+				</li>
+				</ul>
+			</div>
+		</nav>
+		
+		<!-- modals -->
+		<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="takenmodal">
+			<div class="modal-dialog ">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" type="button" data-dismiss="modal">
+							<h4 class="modal-title">Country info</h4>
+						</button>
+					</div>
+				<div class="modal-body">
+					<ul class="nav nav-tabs" id="tabContent">
+						<li class="active">
+							<a href="#details" data-toggle="tab">Details</a>
+						</li>
+						<li>
+							<a href="#access-security" data-toggle="tab">Access / Security</a>
+						</li>
+						<li>
+							<a href="#networking" data-toggle="tab">Networking </a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="details">
+							<table>
+								<thead></thead>
+								<tbody class="table">
+									<tr>
+										<td> 
+											<label class="control-label">Country: </label>
+										</td>
+										<td>
+											<input name="countryid" id="countryid" value=""/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label class="control-label">King:</label>
+										</td>
+										<td>
+											<input name="countryking" id="countryking" value=""/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label class="control-label">Price:</label>
+										</td>
+										<td>
+											<input name="countryprice" id="countryprice" value=""/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label class="control-label">Soldiers:</label>
+										</td>
+										<td>
+											<input name="countrysoldiers" id="countrysoldiers" value=""/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane" id="access-security">content 0 </div>
+						<div class="tab-pane" id="networking">content 1</div>
+					 </div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="emptymodal">
+		<div class="modal-dialog ">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" type="button" data-dismiss="modal">
+						<h4 class="modal-title">Become a King </h4>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table><thead></thead>
+						<tbody class="table">
+						<tr><td> <label class="control-label">Country: </label></td>
+						<td><input name="emptycountryid" id="emptycountryid" value=""/></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">King:</label></td><td><input name="emptycountryking" id="emptycountryking" value=""/></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">Price:</label></td><td><input name="emptycountryprice" id="emptycountryprice" value=""/></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">Soldiers:</label></td><td><input name="emptycountrysoldiers" id="emptycountrysoldiers" value=""/></td>
+							</tr>
+						</tbody>
+					</table>
+				<button class="btn btn-default" type="submit" name="buy_c" id="becomeaking">Become a King</button>
+				</div>
+				</div>
+				</div>
+				</div>
+				<!--h1=title-->
+				<h1>Hello  </h1>
+				<h3>Welcome to Imperator</h3>
+				<h3>Win all Wars and become the strongest EMPERATOR of the world</h3>
+			    <div class="col-8" id="worldMap">
+				</div>
+				</body>
+				<footer>
+			<script type="text/javascript" src="index.js"></script>
+			<script type="text/javascript" src="world.js "></script>
+			 </footer>
+</html>

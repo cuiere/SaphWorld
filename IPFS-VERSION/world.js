@@ -144,11 +144,11 @@ console.log('data ', kings[kings_name[0]]); // id => [id_country]
     });// end Onclick
 			
 
-    $(window).on('resize', function() {
+ $(window).on('resize', function() {
        map.resize();
     });
 	
-    console.log('mapdd ', countries);
+console.log('mapdd ', countries);
 
 
 		

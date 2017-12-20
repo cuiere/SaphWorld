@@ -162,7 +162,7 @@ async function becomeAKing(count_id, value_){
 		 .send({from: accounts[0], value:value_},function(res,err){console.log(' ADDRR ',accounts[0],' RES ',res,' err ',err);$('#emptymodal').modal('hide');})
 		 .then(() => {
 				contractInstance.methods.getKing(count_id)
-				.call({from: accounts[0],gas:20000000},function(error,result){ console.log('Le king est ', result,error);console.log('map ',map);})
+				.call({from: accounts[0],gas:20000000},function(error,result){ console.log('Le king est ', result,error);})
 				});
 	  });
 	  console.log('after   !! ')
