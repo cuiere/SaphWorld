@@ -368,26 +368,28 @@ for (var cc=0; cc< countries_t.length; cc ++){
 	 // async tnéket omha 
 		  contractInstance.methods.getCountryInfo(Web3.utils.asciiToHex(countries_t[cc])).call({gas:2000000},function(err,res){
 			 console.log('calling node for countryinformation');
+			 tmp_r = {};
 			 		 	if(!err && res[3]){
 							id = res[0];
 							king = res[1];
 							price = res[2];
 							taken = res[3];
-							
+							key = Web3.utils.toUtf8(id)
 							if (zabab[king] != undefined){
 								
-								console.log('daznamou ',map)
+								console.log('daznamou ',zabab[king])
+								tmp_r[key] = zabab[king]
 							}
 							else{
-							tmp_r = {};
+							
 							zabab[king] = getRandomColor()
-							key = Web3.utils.toUtf8(id)
+							
 							console.log('zabab[king].toString ',zabab[king])
 							tmp_r[key] = zabab[king]
-							update(tmp_r );
+							
 								
 							}
-							
+							update(tmp_r );
 							// filling kings
 							//console.log('kings[king]79 ',kings[king] );
 							if(kings[king] == undefined){
