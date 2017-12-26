@@ -12,10 +12,12 @@
 
 
 
-function getWeb3(callback) {
-  if (typeof window.web3 === 'undefined') {
+function getWeb3() {
+	var web3 ;
+  if (typeof window.web3 === 'undefined' | window.web3 == null) {
     // no web3, use fallback
     console.error("Please use a web3 browser");
+	  return null;
   } else {
     // window.web3 == web3 most of the time. Don't override the provided,
     // web3, just wrap it in your Web3.
@@ -25,7 +27,7 @@ function getWeb3(callback) {
     // new instance
     web3.eth.defaultAccount = window.web3.eth.defaultAccount;
 
-    callback(web3);
+    return web3;
   }
 }
 
@@ -153,41 +155,52 @@ function add_provider(){
 	
 }
 
-
-async function becomeAKing(count_id, value_){
-	console.log('contractInstance.methods BK ', web3.eth.getAccounts(function(err,res){console.log('res err',res,err)}));
+function _blocks_status(status_){
 	
-  await web3.eth.getAccounts(async function(err,accounts){
-      await contractInstance.methods.becomeAKing(count_id)
-		 .send({from: accounts[0], value:value_},function(res,err){console.log(' ADDRR ',accounts[0],' RES ',res,' err ',err);$('#emptymodal').modal('hide');})
-		 .then(() => {
-				contractInstance.methods.getKing(count_id)
-				.call({from: accounts[0],gas:20000000},function(error,result){ console.log('Le king est ', result,error);console.log('map ',map);})
-				});
-	  });
-	  console.log('after   !! ')
+	document.getElementById("services-section").style.display = status_;
+				document.getElementById("works-section").style.display = status_;
+				document.getElementById("about-section").style.display = status_;
+				document.getElementById("team-section").style.display = status_;
+				//document.getElementById("contact-section").style.display = "none";
+				document.getElementById("social-section").style.display = status_;
+				document.getElementById("achievements").style.display = status_;
+				
 }
+
 
 function getCountryInfo(cid){
        return contractInstance.methods.getCountryInfo(cid).call({gas:2000000});	 
 }
 
-$(document).ready(function() { 
-		 if (typeof window.web3 === 'undefined') {
-    // no web3, use fallback
-    console.error("Please use a web3 browser");
-	var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://192.168.1.14:8546'));
-	console.log('we ll use this web3', web3);
-	//$('#emptymodal').modal('show');
-  } else {
-    // window.web3 == web3 most of the time. Don't override the provided,
-    // web3, just wrap it in your Web3.
-    var web3 = new Web3(window.web3.currentProvider); 
 
-    // the default account doesn't seem to be persisted, copy it to our
-    // new instance
-    web3.eth.defaultAccount = window.web3.eth.defaultAccount;
-  }
+
+$(document).ready(function() { 
+
+	_blocks_status("none");
+
+	var start_the_game = document.getElementById('start_the_game');
+
+			start_the_game.addEventListener('click', async function() {
+				
+				
+				web3 = getWeb3();
+				if (web3 != null){
+				_blocks_status("none");
+				Launch ();
+				window.location.hash = '#worldMap';
+				}
+				else{
+					$('#errorModal').modal('show');
+					
+				}
+			}, false);
+
+
+
+	
+	function Launch(){
+
+		 
 	/* if(typeof window.web3 !== "undefined" && typeof window.web3.currentProvider !== "undefined") {
         var web3 = new Web3(window.web3.currentProvider);
 		console.log('Already injected, using this web3');
@@ -222,12 +235,27 @@ $(document).ready(function() {
 				console.log("Pending transaction : ",result);
 		});
 		
+	var map ; // declarer la map pour la fonction b_a_king
+	async function becomeAKing(count_id, value_){
+	console.log('contractInstance.methods BK ', web3.eth.getAccounts(function(err,res){console.log('res err',res,err)}));
+	
+  await web3.eth.getAccounts(async function(err,accounts){
+      await contractInstance.methods.becomeAKing(count_id)
+		 .send({from: accounts[0], value:value_},function(res,err){console.log(' ADDRR ',accounts[0],' RES ',res,' err ',err);$('#emptymodal').modal('hide');})
+		 .then(() => {
+				contractInstance.methods.getKing(count_id)
+				.call({from: accounts[0],gas:20000000},function(error,result){ console.log('Le king est ', result,error); update_king(accounts[0], Web3.utils.toUtf8(count_id));})
+				});
+	  });
+	  console.log('after   !! ')
+}
+		
 	var b_a_king = document.getElementById('becomeaking');
 
 			b_a_king.addEventListener('click', async function() {
 				console.log('you want to be a king of ',Web3.utils.asciiToHex($('#emptycountryid').val()));
 				console.log('the price is ',$('#emptycountryprice').val());
-				await becomeAKing(Web3.utils.asciiToHex($('#emptycountryid').val()),Web3.utils.toWei($('#emptycountryprice').val()));
+				await becomeAKing(Web3.utils.asciiToHex($('#emptycountryid').val()),Web3.utils.toWei($('#emptycountryprice').val())); !!!!!!!!!!!!!!!!!!!!!!!!!!!
 				console.log('finish awaiting for become a king ... this will hide the modal')
 				
 				
@@ -362,6 +390,21 @@ function update (k){
 	map.updateChoropleth(k);
 	}
 	  
+	  
+function update_king(idk,idc){
+	var tmp_r ={};
+	if (zabab[idk] != undefined){
+		tmp_r[idc] = zabab[idk]
+							}
+							else{
+							zabab[idk] = getRandomColor()
+							console.log('zabab[idk].toString ',zabab[idk])
+							tmp_r[idc] = zabab[idk]
+							}
+	update(tmp_r)
+	
+}
+
 for (var cc=0; cc< countries_t.length; cc ++){
 	 
 	 
@@ -374,22 +417,8 @@ for (var cc=0; cc< countries_t.length; cc ++){
 							king = res[1];
 							price = res[2];
 							taken = res[3];
-							key = Web3.utils.toUtf8(id)
-							if (zabab[king] != undefined){
-								
-								console.log('daznamou ',zabab[king])
-								tmp_r[key] = zabab[king]
-							}
-							else{
-							
-							zabab[king] = getRandomColor()
-							
-							console.log('zabab[king].toString ',zabab[king])
-							tmp_r[key] = zabab[king]
-							
-								
-							}
-							update(tmp_r );
+							id_country = Web3.utils.toUtf8(id)
+							update_king(king, id_country );
 							// filling kings
 							//console.log('kings[king]79 ',kings[king] );
 							if(kings[king] == undefined){
@@ -422,7 +451,7 @@ for (var cc=0; cc< countries_t.length; cc ++){
 			 
 			 
  }; // End foreach
-
+console.log('zbab >>>>>>>>>>>> ', zabab)
 
 
 	 
@@ -443,9 +472,9 @@ console.log('data ', kings[kings_name[0]]); // id => [id_country]
 
 	
 					
-     kings_refresh.forEach((e)=>{					
+    /*  kings_refresh.forEach((e)=>{					
 	map.updateChoropleth(e);
-	 });
+	 }); */
 
 								 
 	console.log('constructedMAp ',kings_refresh);
@@ -488,7 +517,7 @@ console.log('data ', kings[kings_name[0]]); // id => [id_country]
 	
     console.log('mapdd ', countries);
 
-
+	}
 		
 		
   

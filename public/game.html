@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Imperator</title>
+<meta name="description" content="">
+<meta name="author" content="">
+
+
+
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+<script src="https://datamaps.github.io/scripts/datamaps.world.js"></script>
+
+<script type="text/javascript" src="https://cdn.rawgit.com/ethereum/web3.js/edd801b86426257c2da75f7a98e93866f04243f2/dist/web3.min.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+<script type="text/javascript" src="js/SmoothScroll.js"></script> 
+<script type="text/javascript" src="js/indexgame.js"></script>
+
+</head>
+<body>
+<!-- Navigation
+    ==========================================-->
+
+<div class= "container-fluid">
+	<div class="row">
+		<div class="col-sm-3" id="zoom-info"></div>
+		<div class="col-sm-3">
+			<button class="zoom-button" data-zoom="reset">0</button>
+			<button class="zoom-button" data-zoom="out">-</button>
+			<button class="zoom-button" data-zoom="in">+</button>
+		</div>
+			<div class="col-sm-6" id="worldMap"></div>
+	</div> 
+</div>
+<div class="container">
+	<div class="row">
+	
+	    <div class="col-sm-4" style="background-color:red;">aazeazeeeeeeeeeeeeeeeeeeeeee	</div>
+		 <div class="col-sm-4"  id="map"></div> 
+		<div class ="col-sm-4" style="background-color:yellow;"  id="zoom level">eeeeeeeeee</div>
+	</div>
+</div>
+
+	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="takenmodal">
+			<div class="modal-dialog ">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" type="button" data-dismiss="modal">
+							<h4 class="modal-title">Country info</h4>
+						</button>
+					</div>
+				<div class="modal-body">
+					<ul class="nav nav-tabs" id="tabContent">
+						<li class="active">
+							<a href="#details" data-toggle="tab">Details</a>
+						</li>
+						<li>
+							<a href="#access-security" data-toggle="tab">Access / Security</a>
+						</li>
+						<li>
+							<a href="#networking" data-toggle="tab">Networking </a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="details">
+							<table>
+								<thead></thead>
+								<tbody class="table">
+									<tr>
+										<td> 
+											<label class="control-label">Country: </label>
+										</td>
+										<td>
+											<input name="countryid" id="countryid" value=""/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label class="control-label">King:</label>
+										</td>
+										<td>
+											<input name="countryking" id="countryking" value=""/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label class="control-label">Price:</label>
+										</td>
+										<td>
+											<input name="countryprice" id="countryprice" value=""/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<label class="control-label">Soldiers:</label>
+										</td>
+										<td>
+											<input name="countrysoldiers" id="countrysoldiers" value=""/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane" id="access-security">content 0 </div>
+						<div class="tab-pane" id="networking">content 1</div>
+					 </div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="emptymodal">
+		<div class="modal-dialog ">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" type="button" data-dismiss="modal"></button>
+				</div>
+				<div class="modal-body">
+					<table><thead></thead>
+						<tbody class="table">
+						<tr><td> <label class="control-label">Country: </label></td>
+						<td><input name="emptycountryid" id="emptycountryid" value=""/></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">King:</label></td><td><input name="emptycountryking" id="emptycountryking" value=""/></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">Price:</label></td><td><input name="emptycountryprice" id="emptycountryprice" value=""/></td>
+						</tr>
+						<tr>
+							<td><label class="control-label">Soldiers:</label></td><td><input name="emptycountrysoldiers" id="emptycountrysoldiers" value=""/></td>
+							</tr>
+						</tbody>
+					</table>
+				<button class="btn btn-default" type="submit" name="buy_c" id="becomeaking">Become a King</button>
+				</div>
+				</div>
+				</div>
+				</div>
+				
+				
+<button id="start_the_game"> start</button>
+				<!--finmodals-->
+
+
+
+</body>
+
+<!-- Javascripts
+    ================================================== --> 
+</html>

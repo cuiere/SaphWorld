@@ -47,26 +47,6 @@ geth --identity "noeudMnayeek"  --datadir rinkeby --rpc --rpcapi "eth,net,web3,d
 
 
 
- 110.98 KB / 641.73 KB [==============>--------------------------------------------------------------------]  17.29% 0sadded QmQaPv9gpf64BvJ78PfSWZcoZHoEsna2RbV7XkbZXkZu2v IPFS-VERSION/datamaps.world.min.js
- 125.04 KB / 641.73 KB [================>------------------------------------------------------------------]  19.48% 0sadded Qmb38S11ZTdT8j8ymB868n99XVLGLKoNUDteJ1Wqfczy9w IPFS-VERSION/index.js
- 130.92 KB / 641.73 KB [================>------------------------------------------------------------------]  20.40% 0sadded QmR7EVE9ZjuQ9rWxGL8JSa25HQXD1yR8Lhdku5wLQykSA1 IPFS-VERSION/indexe.html
- 632.72 KB / 641.73 KB [=================================================================================>-]  98.60% 0sadded QmSGtVBLqPo9bkaM8pFwBD73zsGR7ErkAWq4hdrEMHmVUk IPFS-VERSION/web3.js
- 637.73 KB / 641.73 KB [===================================================================================]  99.38% 0sadded QmUHjbKUDnXi3gzzbPLhZfP1noRomu5sopQ7wwp8jzNtc3 IPFS-VERSION/world.js
-added QmURyBDikndbF5VQeJi7vBjTm5DpCRYjp1bJUJGn6fT4rL IPFS-VERSION
-Published to QmZ1c5VdHqcLqhGcart9A2xeM8jQe3w9BosLAHLQ3oNFqU: /ipfs/QmURyBDikndbF5VQeJi7vBjTm5DpCRYjp1bJUJGn6fT4rL
-
-
-
-
-
-
-
-initializing IPFS node at C:\Users\saph\.ipfs
-generating 2048-bit RSA keypair...done
-peer identity: QmZ1c5VdHqcLqhGcart9A2xeM8jQe3w9BosLAHLQ3oNFqU
-to get started, enter:
-
-        ipfs cat /ipfs/QmS4ustL54uo8FzR9455qaxZwuMiUhyvMcX9Ba8nUH4uVv/readme
 
 
 

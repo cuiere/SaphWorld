@@ -119,14 +119,14 @@ hr {
 }
 /* Home Style */
 header {
-	background: url(../img/header-bg.jpg) no-repeat bottom right;
+	background: url(header-bg.jpg) no-repeat bottom right;
 	background-size: cover;
 	color: #cfcfcf;
 	position: relative;
 	height: 100%;
 }
 header p {
-	color: rgba(255,255,255,0.8);
+	color: rgba(255,255,255,1);
 	font-size: 20px;
 	margin-bottom: 80px;
 }

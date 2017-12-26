@@ -154,19 +154,7 @@ function add_provider(){
 }
 
 
-async function becomeAKing(count_id, value_){
-	console.log('contractInstance.methods BK ', web3.eth.getAccounts(function(err,res){console.log('res err',res,err)}));
-	
-  await web3.eth.getAccounts(async function(err,accounts){
-      await contractInstance.methods.becomeAKing(count_id)
-		 .send({from: accounts[0], value:value_},function(res,err){console.log(' ADDRR ',accounts[0],' RES ',res,' err ',err);$('#emptymodal').modal('hide');})
-		 .then(() => {
-				contractInstance.methods.getKing(count_id)
-				.call({from: accounts[0],gas:20000000},function(error,result){ console.log('Le king est ', result,error);console.log('map ',map);})
-				});
-	  });
-	  console.log('after   !! ')
-}
+
 
 function getCountryInfo(cid){
        return contractInstance.methods.getCountryInfo(cid).call({gas:2000000});	 
@@ -222,12 +210,27 @@ $(document).ready(function() {
 				console.log("Pending transaction : ",result);
 		});
 		
+	var map ; // declarer la map pour la fonction b_a_king
+	async function becomeAKing(count_id, value_){
+	console.log('contractInstance.methods BK ', web3.eth.getAccounts(function(err,res){console.log('res err',res,err)}));
+	
+  await web3.eth.getAccounts(async function(err,accounts){
+      await contractInstance.methods.becomeAKing(count_id)
+		 .send({from: accounts[0], value:value_},function(res,err){console.log(' ADDRR ',accounts[0],' RES ',res,' err ',err);$('#emptymodal').modal('hide');})
+		 .then(() => {
+				contractInstance.methods.getKing(count_id)
+				.call({from: accounts[0],gas:20000000},function(error,result){ console.log('Le king est ', result,error); update_king(accounts[0], Web3.utils.toUtf8(count_id));})
+				});
+	  });
+	  console.log('after   !! ')
+}
+		
 	var b_a_king = document.getElementById('becomeaking');
 
 			b_a_king.addEventListener('click', async function() {
 				console.log('you want to be a king of ',Web3.utils.asciiToHex($('#emptycountryid').val()));
 				console.log('the price is ',$('#emptycountryprice').val());
-				await becomeAKing(Web3.utils.asciiToHex($('#emptycountryid').val()),Web3.utils.toWei($('#emptycountryprice').val()));
+				await becomeAKing(Web3.utils.asciiToHex($('#emptycountryid').val()),Web3.utils.toWei($('#emptycountryprice').val())); !!!!!!!!!!!!!!!!!!!!!!!!!!!
 				console.log('finish awaiting for become a king ... this will hide the modal')
 				
 				
@@ -362,6 +365,21 @@ function update (k){
 	map.updateChoropleth(k);
 	}
 	  
+	  
+function update_king(idk,idc){
+	var tmp_r ={};
+	if (zabab[idk] != undefined){
+		tmp_r[idc] = zabab[idk]
+							}
+							else{
+							zabab[idk] = getRandomColor()
+							console.log('zabab[idk].toString ',zabab[idk])
+							tmp_r[idc] = zabab[idk]
+							}
+	update(tmp_r)
+	
+}
+
 for (var cc=0; cc< countries_t.length; cc ++){
 	 
 	 
@@ -374,22 +392,8 @@ for (var cc=0; cc< countries_t.length; cc ++){
 							king = res[1];
 							price = res[2];
 							taken = res[3];
-							key = Web3.utils.toUtf8(id)
-							if (zabab[king] != undefined){
-								
-								console.log('daznamou ',zabab[king])
-								tmp_r[key] = zabab[king]
-							}
-							else{
-							
-							zabab[king] = getRandomColor()
-							
-							console.log('zabab[king].toString ',zabab[king])
-							tmp_r[key] = zabab[king]
-							
-								
-							}
-							update(tmp_r );
+							id_country = Web3.utils.toUtf8(id)
+							update_king(king, id_country );
 							// filling kings
 							//console.log('kings[king]79 ',kings[king] );
 							if(kings[king] == undefined){
@@ -422,7 +426,7 @@ for (var cc=0; cc< countries_t.length; cc ++){
 			 
 			 
  }; // End foreach
-
+console.log('zbab >>>>>>>>>>>> ', zabab)
 
 
 	 
